@@ -3,7 +3,6 @@ import { Buffer } from "buffer";
 import path from "path";
 import FieldsArray from "./FieldsArray";
 import Bundle, { filesSymbol } from "./Bundle";
-import getModelFolderContents from "./getModelFolderContents";
 import * as Schemas from "./schemas";
 import * as Signature from "./Signature";
 import * as Strings from "./StringsUtils";
@@ -84,15 +83,6 @@ export default class PKPass extends Bundle {
 			buffers["pass.json"] = Buffer.from(
 				JSON.stringify(source[propsSymbol]),
 			);
-		} else {
-			Schemas.assertValidity(
-				Schemas.Template,
-				source,
-				Messages.TEMPLATE.INVALID,
-			);
-
-			buffers = await getModelFolderContents(source.model);
-			certificates = source.certificates;
 		}
 
 		return new PKPass(buffers, certificates, props);
